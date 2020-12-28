@@ -1,0 +1,26 @@
+img {
+  width: 100%;
+}
+
+th,
+td {
+  text-align: center;
+}
+
+tbody tr td:first-child,
+td:last-child {
+  width: 20%;
+}
+
+.table > tbody > tr > td {
+  vertical-align: middle;
+  text-align: center;
+}
+
+.property-value {
+  margin-left: 5px;
+}
+
+table {
+  margin-top: 10px;
+}

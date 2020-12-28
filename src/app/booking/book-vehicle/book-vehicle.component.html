@@ -1,0 +1,107 @@
+<div class="container">
+    <div id="bookingStepper" class="col bs-stepper">
+        <div class="bs-stepper-header">
+            <div class="step" data-target="#pickup">
+                <button class="step-trigger">
+                    <span class="bs-stepper-circle">1</span>
+                    <span class="bs-stepper-label">Pick Up</span>
+                </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#dropoff">
+                <button class="step-trigger">
+                    <span class="bs-stepper-circle">2</span>
+                    <span class="bs-stepper-label">Drop Off</span>
+                </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#availableVehicle">
+                <button class="step-trigger">
+                    <span class="bs-stepper-circle">3</span>
+                    <span class="bs-stepper-label">Available Vehicles</span>
+                </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#confirmBooking">
+                <button class="step-trigger">
+                    <span class="bs-stepper-circle">4</span>
+                    <span class="bs-stepper-label">Confirm Booking</span>
+                </button>
+            </div>
+        </div>
+        <div class="bs-stepper-content">
+            <div id="pickup" class="content fade">
+                <p>Select Pick Up date</p>
+                <div class="row align-items-center">
+                    <div class="col-md-4 form-group">
+                        <input type="text" placeholder="Select Pick Up Date" class="form-control" bsDatepicker
+                            [bsConfig]="dateConfig" [(bsValue)]="availableVehicle.pickUpDate" name="pickUpDate">
+                    </div>
+                </div>
+                <div class="align-items-center">
+                    <button (click)=" next()" class="btn btn-primary">Next</button>
+                </div>
+            </div>
+            <div id="dropoff" class="content fade">
+                <div *ngIf="errorStatusMessage !==''" class="message-alert">
+                    <alert type="danger">{{errorStatusMessage}}</alert>
+                </div>
+                <p><strong>PickUp Date:</strong> {{availableVehicle.pickUpDate | date}}</p>
+                <div class="row align-items-center">
+                    <div class="col-md-3 form-group">
+                        <select class="form-control" data-val="true" (change)="setLocation($event)">
+                            <option value="">Select Location</option>
+                            <option *ngFor="let location of availableLocation">
+                                {{location.name}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <input type="text" placeholder="Select Drop Off Date" class="form-control" bsDatepicker
+                            [bsConfig]="dateConfig" [(bsValue)]="availableVehicle.dropOffDate" name="dropOffDate">
+                    </div>
+                </div>
+                <button (click)="prev()" class="btn btn-outline-secondary btn-prev">Prev</button>
+                <button (click)="fetchAvailableVehicles('CAR')" class="btn btn-primary">Next</button>
+            </div>
+            <div id="availableVehicle" class="fade content">
+                <div class="d-flex justify-content-between">
+                    <div class="row">
+                        <button (click)="prev()" class="btn btn-link"><span><i class="fa fa-angle-left"></i></span>
+                            Back
+                        </button>
+                    </div>
+                    <div class="btn-group" btnRadioGroup (click)="selectVehicleType()" [(ngModel)]="vehicleType"
+                        ngDefaultControl>
+                        <label class="btn btn-outline-primary" btnRadio="CAR" uncheckable tabindex="0"
+                            role="button">Car</label>
+                        <label class="btn btn-outline-primary" btnRadio="BIKE" uncheckable tabindex="0"
+                            role="button">Bike</label>
+                    </div>
+                    <div>
+                        <select class="form-control" data-val="true" (change)="filterVehicleList($event)">
+                            <option value="">Select Subcategory</option>
+                            <option *ngFor="let subCategory of vehicleSubCategory" value="{{subCategory.value}}">
+                                {{subCategory.name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <app-available-vehicle [availableVehicles]="availableVehiclesForBookingFiltered"
+                    (vehicleBooking)="bookVehicle($event)">
+                </app-available-vehicle>
+            </div>
+            <div id="confirmBooking" class="fade content">
+                <ng-container *ngIf="bookedVehicle">
+                    <app-confirm-booking (navigateBack)="prev()" [bookedVehicle]="bookedVehicle"
+                        [pickUpDate]="availableVehicle.pickUpDate" [dropOffDate]="availableVehicle.dropOffDate"
+                        [location]="availableVehicle.location">
+                    </app-confirm-booking>
+                </ng-container>
+                <ng-template #noData>
+                    <h3>No Data to display</h3>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>

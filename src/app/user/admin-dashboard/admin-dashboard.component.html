@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <h1>Available Vehicles</h1>
+    </div>
+    <hr />
+</div>
+<div class="container d-flex flex-column justify-content-center">
+    <div class="row justify-content-end">
+        <button class="btn btn-link" [routerLink]='["/admin/add-vehicle"]'>
+            <span><i class="fa fa-plus-circle" aria-hidden="true"></i></span> Add Vehicle
+        </button>
+    </div>
+    <ng-container *ngIf="vehicleDetail$ | async as vehicles; else loading">
+        <table *ngIf="vehicles.length>0 else nodata" class="table table-bordered">
+            <thead class="table-secondary">
+                <tr>
+                    <th scope="col">Image</th>
+                    <th scope="col">Model</th>
+                    <th scope="col">Number</th>
+                    <th scope="col">Sub Category</th>
+                    <th scope="col">Fuel Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let vehicle of vehicles">
+                    <tr class="table-light">
+                        <td><img src="{{vehicle.carImageUrl}}"></td>
+                        <td>{{vehicle.vehicleModel}}</td>
+                        <td>{{vehicle.vehicleNumber}}</td>
+                        <td>{{vehicle.vehicleSubCategoryId | subcategory}}</td>
+                        <td>{{vehicle.fuelType}}</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </ng-container>
+    <ng-template #nodata>
+        <h2>No data to display. Please add some vehicles.</h2>
+    </ng-template>
+    <ng-template #loading>
+        <div class="d-flex justify-content-center">
+            <i class="fa fa-spinner fa-spin fa-3x"></i>
+        </div>
+    </ng-template>
+</div>

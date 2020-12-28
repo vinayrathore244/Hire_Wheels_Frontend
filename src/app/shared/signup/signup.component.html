@@ -1,0 +1,110 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-11 mx-auto">
+            <div *ngIf="errorStatusMessage !==''" class="message-alert">
+                <alert type="danger">{{errorStatusMessage}}</alert>
+            </div>
+            <div *ngIf="successStatusMessage !==''" class="message-alert">
+                <alert type="success">{{successStatusMessage}}</alert>
+            </div>
+            <div class="card">
+                <div class="card-header text-center">
+                    <h2>Sign Up</h2>
+                </div>
+                <div class="card-body">
+                    <form class="form" [formGroup]="signUpForm" (ngSubmit)="submitSignUpForm()">
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label><strong>First Name:</strong> </label>
+                            </div>
+                            <div class="col">
+                                <input type="text" class="form-control" formControlName="firstName">
+                                <span class="text-danger"
+                                    *ngIf="signUpFormControl.firstName.touched  && signUpFormControl.firstName.errors?.required">
+                                    First Name is required.
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label><strong>Last Name:</strong></label>
+                            </div>
+                            <div class="col">
+                                <input type="text" class="form-control" formControlName="lastName">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label><strong>Email ID:</strong></label>
+                            </div>
+                            <div class="col">
+                                <input type="text" class="form-control" formControlName="email">
+                                <span class="text-danger"
+                                    *ngIf="signUpFormControl.email.touched && signUpFormControl.email.errors?.required">
+                                    Email is required.
+                                </span>
+                                <span class="text-danger"
+                                    *ngIf="signUpFormControl.email.touched && signUpFormControl.email.errors?.email">
+                                    Enter a valid email address.
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label><strong>Mobile number:</strong></label>
+                            </div>
+                            <div class="col">
+                                <input type="text" class="form-control" formControlName="mobile">
+                                <span class="text-danger"
+                                    *ngIf="signUpFormControl.mobile.touched && signUpFormControl.mobile.errors?.required">
+                                    Mobile number is required.
+                                </span>
+                                <span class="text-danger"
+                                    *ngIf="signUpFormControl.mobile.touched  && signUpFormControl.mobile.hasError('pattern')">
+                                    Mobile number must have 10 digits only and cannot start with 0.
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label><strong>Password:</strong></label>
+                            </div>
+                            <div class="col">
+                                <input type="password" class="form-control" formControlName="password">
+                                <span class="text-danger"
+                                    *ngIf="signUpFormControl.password.touched && signUpFormControl.password.errors?.required">
+                                    Password is required.
+                                </span>
+                                <span class="text-danger"
+                                    *ngIf="signUpFormControl.password.touched && signUpFormControl.password.errors?.invalidPassword">
+                                    Password should have minimum 5 characters, at least 1 uppercase letter, 1 lowercase
+                                    letter and 1 number.
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label><strong>Confirm Password:</strong></label>
+                            </div>
+                            <div class="col">
+                                <input type="password" class="form-control" formControlName="confirmPassword">
+                                <span class="text-danger"
+                                    *ngIf="signUpFormControl.confirmPassword.touched && signUpFormControl.confirmPassword.errors?.required">
+                                    Confirm password is required.
+                                </span>
+                                <span class="text-danger"
+                                    *ngIf="signUpFormControl.confirmPassword.touched && signUpFormControl.confirmPassword.errors?.passwordMismatch">
+                                    Passwords doesnot match.
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row form-group justify-content-center">
+                            <button [disabled]="signUpForm.invalid" type="submit" class="btn btn-primary col-md-5">Sign
+                                Up</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,121 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 mx-auto">
+            <div *ngIf="errorStatusMessage !==''" class="message-alert">
+                <alert type="danger">{{errorStatusMessage}}</alert>
+            </div>
+            <div *ngIf="successStatusMessage !==''" class="message-alert">
+                <alert type="success">{{successStatusMessage}}</alert>
+            </div>
+            <div class="row">
+                <button class="btn btn-link" [routerLink]='["/admin/dashboard"]'>
+                    <span><i class="fa fa-angle-left"></i></span> Back to dashboard
+                </button>
+            </div>
+            <div class="card">
+                <div class="card-header text-center">
+                    <h2>Add Vehicle</h2>
+                </div>
+                <div class="card-body">
+                    <form class="form" [formGroup]="addVehicleForm" (ngSubmit)="onAddVehicleFormSubmit()">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><strong>Vehicle Name</strong></label>
+                                    <input type="text" class="form-control" formControlName="vehicleModel">
+                                    <span class="text-danger"
+                                        *ngIf="addVehicleFormControl.vehicleModel.touched  && addVehicleFormControl.vehicleModel.errors?.required">
+                                        Vehicle Name is required.
+                                    </span>
+                                </div>
+                                <div class="form-group">
+                                    <label><strong>Vehicle Category</strong></label>
+                                    <select class="form-control" data-val="true" (change)="getSubcategory($event)"
+                                        formControlName="category">
+                                        <option value="">Select Category</option>
+                                        <option value="Car">Car</option>
+                                        <option value="Bike">Bike</option>
+                                    </select>
+                                    <span class="text-danger"
+                                        *ngIf="addVehicleFormControl.category.touched && addVehicleFormControl.category.errors?.required">
+                                        Vehicle Category is required.
+                                    </span>
+                                </div>
+                                <div class="form-group">
+                                    <label><strong>Vehicle Subcategory</strong></label>
+                                    <select class="form-control" data-val="true" formControlName="subCategory">
+                                        <option value="">Select Subcategory</option>
+                                        <option *ngFor="let subCategory of vehicleSubCategory" [ngValue]="subCategory">
+                                            {{subCategory.name}}
+                                        </option>
+                                    </select>
+                                    <span class="text-danger"
+                                        *ngIf="addVehicleFormControl.subCategory.touched  && addVehicleFormControl.subCategory.errors?.required">
+                                        Vehicle Subcategory is required.
+                                    </span>
+                                </div>
+                                <div class="form-group">
+                                    <label><strong>Available Location</strong></label>
+                                    <select class="form-control" data-val="true" formControlName="location">
+                                        <option value="">Select Location</option>
+                                        <option *ngFor="let location of availableLocation" [ngValue]="location">
+                                            {{location.name}}
+                                        </option>
+                                    </select>
+                                    <span class="text-danger"
+                                        *ngIf="addVehicleFormControl.location.touched && addVehicleFormControl.location.errors?.required">
+                                        Location is required.
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><strong>Vehicle Number</strong></label>
+                                    <input type="text" class="form-control" formControlName="vehicleNumber">
+                                    <span class="text-danger"
+                                        *ngIf="addVehicleFormControl.vehicleNumber.touched && addVehicleFormControl.vehicleNumber.errors?.required">
+                                        Vehicle Number is required.
+                                    </span>
+                                </div>
+                                <div class="form-group">
+                                    <label><strong>Fuel Type</strong></label>
+                                    <select class="form-control" data-val="true" formControlName="fuelType">
+                                        <option value="">Select Fuel Type</option>
+                                        <option *ngFor="let fuelType of vehicleFuelType" [ngValue]="fuelType">
+                                            {{fuelType.name}}
+                                        </option>
+                                    </select>
+                                    <span class="text-danger"
+                                        *ngIf="addVehicleFormControl.fuelType.touched  && addVehicleFormControl.fuelType.errors?.required">
+                                        Fuel Type is required.
+                                    </span>
+                                </div>
+                                <div class="form-group">
+                                    <label><strong>Color</strong></label>
+                                    <input type="text" class="form-control" formControlName="color">
+                                    <span class="text-danger"
+                                        *ngIf="addVehicleFormControl.color.touched  && addVehicleFormControl.color.errors?.required">
+                                        Color is required.
+                                    </span>
+                                </div>
+                                <div class="form-group">
+                                    <label><strong>Image URL</strong></label>
+                                    <input type="text" class="form-control" formControlName="imageURL">
+                                    <span class="text-danger"
+                                        *ngIf="addVehicleFormControl.imageURL.touched  && addVehicleFormControl.imageURL.errors?.required">
+                                        Image URL is required.
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-group justify-content-center">
+                            <button [disabled]="addVehicleForm.invalid" type="submit"
+                                class="btn btn-primary col-md-4">Upload
+                                Details</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

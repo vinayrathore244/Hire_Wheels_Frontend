@@ -1,0 +1,52 @@
+<button type="button" class="btn-login btn btn-link" (click)="showModal()">Sign In</button>
+
+<div *ngIf="isModalShown" [config]="config" (onHidden)="onHidden()" bsModal #loginModal="bs-modal" class="modal fade"
+    tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="loginModal.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <tabset [justified]="true" #loginTab>
+                    <tab>
+                        <ng-template tabHeading>
+                            <span><i class="fa fa-sign-in"></i> Sign in</span>
+                        </ng-template>
+                        <app-signin></app-signin>
+                        <div align="center">
+                            <button type="button" class="btn btn-link" (click)="resetPasswordModal.show()">Forgot
+                                Password</button>
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center">Don't have an account?<button
+                                class="btn btn-link" (click)="navigateToRegister(loginTab,1)">Sign Up</button>
+                        </div>
+                    </tab>
+                    <tab>
+                        <ng-template tabHeading>
+                            <span><i class="fa fa-user-plus"></i> Sign up</span>
+                        </ng-template>
+                        <app-signup></app-signup>
+                    </tab>
+                </tabset>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" bsModal #resetPasswordModal="bs-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="resetPasswordModal.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <app-reset-password></app-reset-password>
+            </div>
+        </div>
+    </div>
+</div>

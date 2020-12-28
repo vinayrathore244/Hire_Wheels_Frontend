@@ -1,0 +1,24 @@
+<nav class="navbar navbar-dark navbar-expand-lg">
+    <a class="navbar-brand" [routerLink]='["home"]'>
+        <span><i class="fa fa-car" aria-hidden="true"></i></span> HireWheels
+    </a>
+    <span class="spacer"></span>
+    <ng-container *ngIf="userData.userId else login">
+        <div class="btn-group" dropdown>
+            <button id="button-animated" dropdownToggle type="button" class="btn btn-link dropdown-toggle"
+                aria-controls="dropdown-animated">{{userData.firstName}} <span class="caret"></span>
+            </button>
+            <ul id="dropdown-animated" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu"
+                aria-labelledby="button-animated">
+                <li *ngIf="userData.roleName === 'Admin'" role=" menuitem"><a class="dropdown-item"
+                        [routerLink]='["admin/dashboard"]'>Dashboard</a></li>
+                <li *ngIf="userData.roleName === 'User'" role="menuitem"><a class="dropdown-item disabled">
+                        {{userData.walletMoney | currency:'INR'}}</a></li>
+                <li role="menuitem"><a class="dropdown-item" (click)="logout()">Logout</a></li>
+            </ul>
+        </div>
+    </ng-container>
+    <ng-template #login>
+        <app-signin-modal></app-signin-modal>
+    </ng-template>
+</nav>
